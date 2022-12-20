@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MWs-4h-nST">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Formulario-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="FormularioViewController" customModule="ejercicio2Clase7" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nombre" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Ffl-Of-yCb">
+                                <rect key="frame" x="39.333333333333343" y="118" width="314.33333333333326" height="34"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" textContentType="name"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Sexo" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="5gS-gA-NVL">
+                                <rect key="frame" x="39.333333333333343" y="167" width="314.33333333333326" height="34"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Numero Documento" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="oJf-LQ-0Yq">
+                                <rect key="frame" x="39.333333333333343" y="265" width="314.33333333333326" height="34"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tipo Documento" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="78O-J1-9mf">
+                                <rect key="frame" x="39.333333333333343" y="216" width="314.33333333333326" height="34"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jac-CR-qNP">
+                                <rect key="frame" x="137.66666666666666" y="349" width="117.66666666666666" height="31"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Enviar Datos">
+                                    <fontDescription key="titleFontDescription" name="Charter-Bold" family="Charter" pointSize="14"/>
+                                    <color key="baseForegroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="accionEnviarDatos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PFv-Fa-EZS"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                        <constraints>
+                            <constraint firstItem="oJf-LQ-0Yq" firstAttribute="width" secondItem="78O-J1-9mf" secondAttribute="width" id="0nj-Pe-XTL"/>
+                            <constraint firstItem="78O-J1-9mf" firstAttribute="width" secondItem="5gS-gA-NVL" secondAttribute="width" id="3Ra-lC-Pag"/>
+                            <constraint firstItem="oJf-LQ-0Yq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NUG-Qm-erT"/>
+                            <constraint firstItem="Jac-CR-qNP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ogc-fI-isi"/>
+                            <constraint firstItem="Ffl-Of-yCb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="RTe-FD-aFn"/>
+                            <constraint firstItem="Ffl-Of-yCb" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="SNq-aQ-hLZ"/>
+                            <constraint firstItem="5gS-gA-NVL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WrA-dT-YFn"/>
+                            <constraint firstItem="Ffl-Of-yCb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Xpb-cO-QRl"/>
+                            <constraint firstItem="5gS-gA-NVL" firstAttribute="top" secondItem="Ffl-Of-yCb" secondAttribute="bottom" constant="15" id="aBG-zF-P2t"/>
+                            <constraint firstItem="5gS-gA-NVL" firstAttribute="width" secondItem="Ffl-Of-yCb" secondAttribute="width" id="aOD-We-4M8"/>
+                            <constraint firstItem="Jac-CR-qNP" firstAttribute="top" secondItem="oJf-LQ-0Yq" secondAttribute="bottom" constant="50" id="cfm-Se-gLn"/>
+                            <constraint firstItem="78O-J1-9mf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dm6-um-VMf"/>
+                            <constraint firstItem="Jac-CR-qNP" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.3" id="fj9-qb-pQ0"/>
+                            <constraint firstItem="78O-J1-9mf" firstAttribute="top" secondItem="5gS-gA-NVL" secondAttribute="bottom" constant="15" id="rSF-MG-YTt"/>
+                            <constraint firstItem="oJf-LQ-0Yq" firstAttribute="top" secondItem="78O-J1-9mf" secondAttribute="bottom" constant="15" id="zjd-m4-rFo"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Formulario" id="Dw5-8A-EiV"/>
+                    <connections>
+                        <segue destination="b1S-4O-Xjg" kind="show" identifier="navegarHaciaVistaAgradecimiento" id="Jma-aQ-Gmz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1040.4580152671756" y="-27.464788732394368"/>
+        </scene>
+        <!--Agradecimiento View Controller-->
+        <scene sceneID="4bo-u7-Lh0">
+            <objects>
+                <viewController id="b1S-4O-Xjg" customClass="AgradecimientoViewController" customModule="ejercicio2Clase7" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nw3-d1-maA">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gracias" translatesAutoresizingMaskIntoConstraints="NO" id="Rec-da-Z4v">
+                                <rect key="frame" x="-28.666666666666657" y="123" width="450.33333333333326" height="606"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="w12-0g-egD"/>
+                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                        <constraints>
+                            <constraint firstItem="Rec-da-Z4v" firstAttribute="centerY" secondItem="nw3-d1-maA" secondAttribute="centerY" id="4jU-Qc-Pi6"/>
+                            <constraint firstItem="Rec-da-Z4v" firstAttribute="top" secondItem="w12-0g-egD" secondAttribute="top" constant="20" id="ep8-sX-9zK"/>
+                            <constraint firstItem="Rec-da-Z4v" firstAttribute="centerX" secondItem="nw3-d1-maA" secondAttribute="centerX" id="yVv-ll-sjT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="jGh-vf-0Bt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cqy-0M-8hg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1852.6717557251907" y="-20.422535211267608"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="HS9-Ow-af3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MWs-4h-nST" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QLJ-JF-IN5">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="AZi-cf-Gqn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j85-bU-GoK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="113.74045801526717" y="-27.464788732394368"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="gracias" width="450" height="650"/>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
