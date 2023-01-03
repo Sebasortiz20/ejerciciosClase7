@@ -10,9 +10,9 @@ import UIKit
 class BienvenidaViewController: UIViewController {
     
     override func viewDidLoad() {
-        //crearAlerta()
-        //configurarTextFieldEnLaAlerta()
-        //configuracionAccionEnLaAlerta()
+        crearAlerta()
+        configurarTextFieldEnLaAlerta()
+        configuracionAccionEnLaAlerta()
     }
     
     private struct Constantes {
@@ -33,13 +33,11 @@ class BienvenidaViewController: UIViewController {
     var alerta: UIAlertController?
     var okAccion: UIAlertAction?
     var numeroDeDocumento: String?
+    var documentoTextField: UITextField?
     
     @IBOutlet weak var labelDeResultado: UILabel!
     
     @IBAction func accionCuandoPresionoElBoton(_ sender: UIButton) {
-        crearAlerta()
-        configurarTextFieldEnLaAlerta()
-        configuracionAccionEnLaAlerta()
         presentarAlerta()
     }
     
@@ -55,18 +53,34 @@ class BienvenidaViewController: UIViewController {
         }
     }
     
+    func procesarAccionOK() {
+        guard let conjuntoDeCampoDeTexto = self.alerta?.textFields else {
+            return
+        }
+        guard let documentoTextField = conjuntoDeCampoDeTexto.first(where: { textFieldBajoAnalisis in
+            return textFieldBajoAnalisis.tag == Constantes.ideintificadorTextFieldTag
+        }) else {
+            return
+        }
+        self.documentoTextField = documentoTextField
+        extraerNumeroDeDocumento()
+        borrarCampoDeTextoDeLaAlerta()
+        self.procesarDocumentoIngresado()
+    }
+    
+    func borrarCampoDeTextoDeLaAlerta() {
+        if let documentoTextFielSeguro = documentoTextField {
+            documentoTextFielSeguro.text = ""
+        }
+    }
+    
+    func extraerNumeroDeDocumento() {
+        self.numeroDeDocumento = documentoTextField?.text ?? ""
+    }
+    
     func configuracionAccionEnLaAlerta() {
         okAccion = UIAlertAction(title: Constantes.tituloDelBotonDeLaAlerta, style: .default) { _ in
-            guard let campoDeTexto = self.alerta?.textFields else {
-                return
-            }
-            guard let documentoTextField = campoDeTexto.first(where: { textFieldBajoAnalisis in
-                return textFieldBajoAnalisis.tag == Constantes.ideintificadorTextFieldTag
-            }) else {
-                return
-            }
-            self.numeroDeDocumento = documentoTextField.text ?? ""
-            self.procesarDocumentoIngresado()
+            self.procesarAccionOK()
         }
         if let alertaSegura = alerta, let okAccionSegura = okAccion  {
             alertaSegura.addAction(okAccionSegura)
