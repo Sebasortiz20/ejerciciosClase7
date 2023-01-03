@@ -23,13 +23,13 @@
                                 </constraints>
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cv-ew-TnR">
-                                <rect key="frame" x="19.666666666666657" y="323" width="353.66666666666674" height="29.666666666666686"/>
-                                <fontDescription key="fontDescription" name="GranthaSangamMN-Bold" family="Grantha Sangam MN" pointSize="17"/>
+                                <rect key="frame" x="19.666666666666657" y="323" width="353.66666666666674" height="15.666666666666686"/>
+                                <fontDescription key="fontDescription" name="GranthaSangamMN-Bold" family="Grantha Sangam MN" pointSize="9"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOD-Ob-HBL">
-                                <rect key="frame" x="143.33333333333334" y="397.66666666666669" width="106.33333333333334" height="35"/>
+                                <rect key="frame" x="143.33333333333334" y="383.66666666666669" width="106.33333333333334" height="35"/>
                                 <color key="backgroundColor" red="0.99607843139999996" green="0.58039215690000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button">

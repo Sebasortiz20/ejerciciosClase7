@@ -71,6 +71,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Formulario" id="Dw5-8A-EiV"/>
                     <connections>
+                        <outlet property="nombreTextFIeld" destination="Ffl-Of-yCb" id="Yux-fa-sEq"/>
+                        <outlet property="numeroDeDocumentoTextFIeld" destination="oJf-LQ-0Yq" id="SdG-UX-Vcr"/>
+                        <outlet property="sexoTextFIeld" destination="5gS-gA-NVL" id="cfi-ng-ZmB"/>
+                        <outlet property="tipoDeDocumentoTextField" destination="78O-J1-9mf" id="qhv-hi-aXS"/>
                         <segue destination="b1S-4O-Xjg" kind="show" identifier="navegarHaciaVistaAgradecimiento" id="Jma-aQ-Gmz"/>
                     </connections>
                 </viewController>

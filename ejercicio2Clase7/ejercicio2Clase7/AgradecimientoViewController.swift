@@ -8,7 +8,4 @@
 import UIKit
 
 class AgradecimientoViewController: UIViewController {
-
-
-
 }

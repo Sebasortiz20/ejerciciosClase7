@@ -9,20 +9,29 @@ import UIKit
 
 class BienvenidaViewController: UIViewController {
     
+    override func viewDidLoad() {
+        //crearAlerta()
+        //configurarTextFieldEnLaAlerta()
+        //configuracionAccionEnLaAlerta()
+    }
+    
     private struct Constantes {
         static let ideintificadorTextFieldTag = 2
         static let cantidadDeDigitosDocumentoEstudiante = 5
         static let cantidadDeDigitosDocumentoProfesor = 6
+        static let sinNumeroIngresado = 0
         static let tituloDelBotonDeLaAlerta = "OK"
         static let tituloDeLaAlerta = "Ingrese"
         static let cuerpoDeLaAlerta = "Numero De Documento"
         static let textoPlaceholderDelTextField = "Numero"
         static let nombreSegueEstudiantes = "navegarHaciaEstudiante"
         static let nombreSegueProfesor = "navegarHaciaProfesor"
+        static let noIngresoNingunDocumento = "No Ingreso Ningun Documento"
+        static let noSeEncuentraRol = "No Se Encuentra Rol Con El Numero De Documento: "
     }
     
-    var alerta = UIAlertController()
-    var okAccion = UIAlertAction()
+    var alerta: UIAlertController?
+    var okAccion: UIAlertAction?
     var numeroDeDocumento: String?
     
     @IBOutlet weak var labelDeResultado: UILabel!
@@ -30,17 +39,25 @@ class BienvenidaViewController: UIViewController {
     @IBAction func accionCuandoPresionoElBoton(_ sender: UIButton) {
         crearAlerta()
         configurarTextFieldEnLaAlerta()
-        presentarAlerta()
         configuracionAccionEnLaAlerta()
+        presentarAlerta()
     }
     
     func crearAlerta() {
         alerta = UIAlertController(title: Constantes.tituloDeLaAlerta, message: Constantes.cuerpoDeLaAlerta , preferredStyle: .alert)
     }
     
+    func configurarTextFieldEnLaAlerta() {
+        alerta?.addTextField { campoDeTextoAConfigurar in
+            campoDeTextoAConfigurar.placeholder = Constantes.textoPlaceholderDelTextField
+            campoDeTextoAConfigurar.tag = Constantes.ideintificadorTextFieldTag
+            campoDeTextoAConfigurar.keyboardType = .numberPad
+        }
+    }
+    
     func configuracionAccionEnLaAlerta() {
         okAccion = UIAlertAction(title: Constantes.tituloDelBotonDeLaAlerta, style: .default) { _ in
-            guard let campoDeTexto = self.alerta.textFields else {
+            guard let campoDeTexto = self.alerta?.textFields else {
                 return
             }
             guard let documentoTextField = campoDeTexto.first(where: { textFieldBajoAnalisis in
@@ -49,25 +66,17 @@ class BienvenidaViewController: UIViewController {
                 return
             }
             self.numeroDeDocumento = documentoTextField.text ?? ""
-            self.verificarSiDocumentoIngresadoEsEstudianteOProfesor()
+            self.procesarDocumentoIngresado()
         }
-        agregarAccionAlaAlerta()
-    }
-    
-    func configurarTextFieldEnLaAlerta() {
-        alerta.addTextField { campoDeTextoAConfigurar in
-            campoDeTextoAConfigurar.placeholder = Constantes.textoPlaceholderDelTextField
-            campoDeTextoAConfigurar.tag = Constantes.ideintificadorTextFieldTag
-            campoDeTextoAConfigurar.keyboardType = .numberPad
+        if let alertaSegura = alerta, let okAccionSegura = okAccion  {
+            alertaSegura.addAction(okAccionSegura)
         }
-    }
-    
-    func agregarAccionAlaAlerta() {
-        alerta.addAction(okAccion)
     }
     
     func presentarAlerta() {
-        present(alerta, animated: true)
+        if let alertaSegura = alerta {
+            present(alertaSegura, animated: true)
+        }
     }
     
     func mostrarMensajeDeResultado(mensaje: String) {
@@ -75,18 +84,24 @@ class BienvenidaViewController: UIViewController {
         labelDeResultado.isHidden = false
     }
     
-    func verificarSiDocumentoIngresadoEsEstudianteOProfesor() {
+    func procesarDocumentoIngresado() {
         if numeroDeDocumento?.count == Constantes.cantidadDeDigitosDocumentoEstudiante {
             presentarVistaEstudiante()
-        }else if numeroDeDocumento?.count == Constantes.cantidadDeDigitosDocumentoProfesor {
+        } else if numeroDeDocumento?.count == Constantes.cantidadDeDigitosDocumentoProfesor {
             presentarVistaProfesor()
+        } else if numeroDeDocumento?.count == Constantes.sinNumeroIngresado {
+            presentarNoIngresoDocumentoEnElLabel()
         } else {
-            presentarResultadoEnElLabel()
+            presentarNoSeEcuentraRolEnElLabel()
         }
     }
     
-    func presentarResultadoEnElLabel() {
-        mostrarMensajeDeResultado(mensaje: "No Se Encuentra Rol Con El Documento: \(self.numeroDeDocumento ?? "")")
+    func presentarNoIngresoDocumentoEnElLabel() {
+        mostrarMensajeDeResultado(mensaje: Constantes.noIngresoNingunDocumento)
+    }
+    
+    func presentarNoSeEcuentraRolEnElLabel() {
+        mostrarMensajeDeResultado(mensaje: "\(Constantes.noSeEncuentraRol) \(self.numeroDeDocumento ?? "")")
     }
     
     func presentarVistaEstudiante() {
