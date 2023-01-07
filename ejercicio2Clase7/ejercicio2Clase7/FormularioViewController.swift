@@ -9,15 +9,11 @@ import UIKit
 
 class FormularioViewController: UIViewController {
     
-    override func viewDidLoad() {
-        crearAlerta()
-    }
-    
-    enum EstadoFormulario {
+    private enum EstadoFormulario {
         case nombreValido, sexoValido, tipoDeDocumentoValido, numeroDeDocumentoValido, nombreVacio, sexoVacio, tipoDeDocumentoVacio, numeroDeDocumentoVacio
     }
     
-    struct Constantes {
+    private struct Constantes {
         static let probabilidadMaxima = 3
         static let tituloDeLaAlerta = "Error"
         static let cuerpoDeLaAlerta = "Fue Imposible Enviar Informacion Al Servidor"
@@ -30,35 +26,55 @@ class FormularioViewController: UIViewController {
     @IBOutlet weak var tipoDeDocumentoTextField: UITextField!
     @IBOutlet weak var numeroDeDocumentoTextFIeld: UITextField!
     
-    var nombre: String?
-    var sexo: String?
-    var tipoDeDocumento: String?
-    var numeroDeDocumento: String?
-    var alerta: UIAlertController?
-    var aceptarAction: UIAlertAction?
+    private var nombre: String?
+    private var sexo: String?
+    private var tipoDeDocumento: String?
+    private var numeroDeDocumento: String?
+    private var alerta: UIAlertController?
+    private var accionAceptar: UIAlertAction?
+    private var resultadosDeValidacion: [EstadoFormulario] = []
+    private let resultadosInvalidos: [EstadoFormulario] = [.sexoVacio, .nombreVacio, .numeroDeDocumentoVacio, .tipoDeDocumentoVacio]
     
-    var resultadosDeValidacion: [EstadoFormulario] = []
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        crearAlerta()
+    }
+    
+    private func crearAlerta() {
+        alerta = UIAlertController(title: Constantes.tituloDeLaAlerta, message: Constantes.cuerpoDeLaAlerta , preferredStyle: .alert)
+        accionAceptar = UIAlertAction(title: Constantes.nombreDelBottonDeLaAlerta, style: .default)
+        if let alertaSegura = alerta, let aceptarActionSegura = accionAceptar {
+            alertaSegura.addAction(aceptarActionSegura)
+        }
+    }
     
     @IBAction func accionEnviarDatos(_ sender: UIButton) {
         limpiarResultadosDeValidacion()
         extraerDatos()
-        validacionDeCamposDelFormulario()
-        procesarCredenciales()
+        validarCamposDelFormulario()
         determinarColoresCamposDeFormulario()
+        revisarFormulario()
     }
     
-    func limpiarResultadosDeValidacion() {
+    private func limpiarResultadosDeValidacion() {
         resultadosDeValidacion = []
     }
     
-    func extraerDatos() {
+    private func extraerDatos() {
         nombre = nombreTextFIeld.text ?? ""
         sexo = sexoTextFIeld.text ?? ""
         tipoDeDocumento = tipoDeDocumentoTextField.text ?? ""
         numeroDeDocumento = numeroDeDocumentoTextFIeld.text ?? ""
     }
     
-    func validarCampoNombre() {
+    private func validarCamposDelFormulario() {
+        validarCampoNombre()
+        validarCampoSexo()
+        validarCampoTipoDeDocumento()
+        validarCampoNumeroDeDocumento()
+    }
+    
+    private func validarCampoNombre() {
         if let nombreSeguro = nombre {
             if nombreSeguro.isEmpty {
                 resultadosDeValidacion.append(.nombreVacio)
@@ -68,7 +84,7 @@ class FormularioViewController: UIViewController {
         }
     }
     
-    func validarCampoSexo() {
+    private func validarCampoSexo() {
         if let sexoSeguro = sexo {
             if sexoSeguro.isEmpty {
                 resultadosDeValidacion.append(.sexoVacio)
@@ -78,7 +94,7 @@ class FormularioViewController: UIViewController {
         }
     }
     
-    func validarCampoTipoDeDocumento() {
+    private func validarCampoTipoDeDocumento() {
         if let tipoDeDocumentoSeguro = tipoDeDocumento {
             if tipoDeDocumentoSeguro.isEmpty {
                 resultadosDeValidacion.append(.tipoDeDocumentoVacio)
@@ -88,7 +104,7 @@ class FormularioViewController: UIViewController {
         }
     }
     
-    func validarCampoNumeroDeDocumento() {
+    private func validarCampoNumeroDeDocumento() {
         if let numeroDeDocumentoSeguro = numeroDeDocumento {
             if numeroDeDocumentoSeguro.isEmpty {
                 resultadosDeValidacion.append(.numeroDeDocumentoVacio)
@@ -98,96 +114,81 @@ class FormularioViewController: UIViewController {
         }
     }
     
-    func validacionDeCamposDelFormulario() {
-        validarCampoNombre()
-        validarCampoSexo()
-        validarCampoTipoDeDocumento()
-        validarCampoNumeroDeDocumento()
-    }
-    
-    func procesarCredenciales() {
-        if let nombreSeguro = nombre, let sexoSeguro = sexo, let tipoDeDocumentoSeguro = tipoDeDocumento, let numeroDeDocumentoSeguro = numeroDeDocumento {
-            let lasCredencialesSonValidas = validarCredenciales(nombre: nombreSeguro, sexo: sexoSeguro, tipoDeDocumento: tipoDeDocumentoSeguro, numeroDeDocumento: numeroDeDocumentoSeguro )
-            procesarResultadoDeLaValidación(resultado: lasCredencialesSonValidas)
-        }
-    }
-    
-    func validarCredenciales(nombre: String, sexo: String, tipoDeDocumento: String, numeroDeDocumento: String) -> Bool {
-        let condicion = nombre != "" && sexo != "" && tipoDeDocumento != "" && numeroDeDocumento != ""
-        if  condicion {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func procesarResultadoDeLaValidación(resultado: Bool) {
-        if resultado {
-            aplicarProbalidadDeErroraAlActulizarContador()
-        }
-    }
-    
-    func determinarColorCampoNombre() {
-        nombreTextFIeld.backgroundColor = resultadosDeValidacion.contains(.nombreValido) ? .systemBackground : .brown
-    }
-    
-    func determinarColorCampoSexo() {
-        sexoTextFIeld.backgroundColor = resultadosDeValidacion.contains(.sexoValido) ? .systemBackground : .brown
-    }
-    
-    func determinarColorCampoTipoDeDocumento() {
-        tipoDeDocumentoTextField.backgroundColor = resultadosDeValidacion.contains(.tipoDeDocumentoValido) ? .systemBackground : .brown
-    }
-    
-    func determinarColorCampoNumeroDeDocumento() {
-        numeroDeDocumentoTextFIeld.backgroundColor = resultadosDeValidacion.contains(.numeroDeDocumentoValido) ? .systemBackground : .brown
-    }
-    
-    func determinarColoresCamposDeFormulario() {
+    private func determinarColoresCamposDeFormulario() {
         determinarColorCampoNombre()
         determinarColorCampoSexo()
         determinarColorCampoTipoDeDocumento()
         determinarColorCampoNumeroDeDocumento()
     }
     
-    func crearAlerta() {
-        alerta = UIAlertController(title: Constantes.tituloDeLaAlerta, message: Constantes.cuerpoDeLaAlerta , preferredStyle: .alert)
-        aceptarAction = UIAlertAction(title: Constantes.nombreDelBottonDeLaAlerta, style: .default)
-        if let alertaSegura = alerta, let aceptarActionSegura = aceptarAction {
-            alertaSegura.addAction(aceptarActionSegura)
+    private func determinarColorCampoNombre() {
+        nombreTextFIeld.backgroundColor = resultadosDeValidacion.contains(.nombreValido) ? .systemBackground : .brown
+    }
+    
+    private func determinarColorCampoSexo() {
+        sexoTextFIeld.backgroundColor = resultadosDeValidacion.contains(.sexoValido) ? .systemBackground : .brown
+    }
+    
+    private func determinarColorCampoTipoDeDocumento() {
+        tipoDeDocumentoTextField.backgroundColor = resultadosDeValidacion.contains(.tipoDeDocumentoValido) ? .systemBackground : .brown
+    }
+    
+    private func determinarColorCampoNumeroDeDocumento() {
+        numeroDeDocumentoTextFIeld.backgroundColor = resultadosDeValidacion.contains(.numeroDeDocumentoValido) ? .systemBackground : .brown
+    }
+    
+    private func revisarFormulario() {
+        let formularioValido = procesarResultadosDeValidacion()
+        if formularioValido {
+            tratarDeMostrarAlertaDeResultado()
         }
     }
     
-    func presentarAlerta() {
+    private func procesarResultadosDeValidacion() -> Bool {
+        var formularioEsValido = true
+        for resultadoBajoAnalisis in resultadosDeValidacion {
+            if resultadosInvalidos.contains(resultadoBajoAnalisis) {
+                formularioEsValido = false
+                break
+            }
+        }
+        return formularioEsValido
+    }
+    
+    private func tratarDeMostrarAlertaDeResultado(){
+        let seObtuvoError = obtenerPosibleError()
+        if seObtuvoError{
+            presentarAlertaDeError()
+        } else {
+            presentarVistaAgradecimiento()
+            limpiarCamposDeTexto()
+        }
+    }
+    
+    private func obtenerPosibleError() -> Bool {
+        let numeroAleatorio = generarNumeroAleatorio()
+        return numeroAleatorio == 1
+    }
+    
+    private func generarNumeroAleatorio() -> Int{
+        return Int.random(in: 1 ... 3)
+    }
+    
+    private func presentarAlertaDeError() {
         if let alertaSegura = alerta{
             present(alertaSegura, animated: true)
         }
     }
     
-    func presentarVistaAgradecimiento() {
+    private func presentarVistaAgradecimiento() {
         performSegue(withIdentifier: Constantes.nombreDelSegueAgradecimiento, sender: self)
     }
     
-    func limpiarCamposDeTexto() {
+    private func limpiarCamposDeTexto() {
         nombreTextFIeld.text = ""
         sexoTextFIeld.text = ""
         tipoDeDocumentoTextField.text = ""
         numeroDeDocumentoTextFIeld.text = ""
-    }
-    
-    func generarNumeroAleatorio() -> Int{
-        return Int.random(in: 1 ... 3)
-    }
-    
-    func aplicarProbalidadDeErroraAlActulizarContador(){
-        let numeroAleatorio = generarNumeroAleatorio()
-        switch (numeroAleatorio) {
-        case 1 :
-            presentarAlerta()
-        default :
-            presentarVistaAgradecimiento()
-            limpiarCamposDeTexto()
-        }
     }
 }
 

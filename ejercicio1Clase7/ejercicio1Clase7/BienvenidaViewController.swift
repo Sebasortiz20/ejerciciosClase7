@@ -9,12 +9,6 @@ import UIKit
 
 class BienvenidaViewController: UIViewController {
     
-    override func viewDidLoad() {
-        crearAlerta()
-        configurarTextFieldEnLaAlerta()
-        configuracionAccionEnLaAlerta()
-    }
-    
     private struct Constantes {
         static let ideintificadorTextFieldTag = 2
         static let cantidadDeDigitosDocumentoEstudiante = 5
@@ -30,22 +24,24 @@ class BienvenidaViewController: UIViewController {
         static let noSeEncuentraRol = "No Se Encuentra Rol Con El Numero De Documento: "
     }
     
-    var alerta: UIAlertController?
-    var okAccion: UIAlertAction?
-    var numeroDeDocumento: String?
-    var documentoTextField: UITextField?
-    
     @IBOutlet weak var labelDeResultado: UILabel!
     
-    @IBAction func accionCuandoPresionoElBoton(_ sender: UIButton) {
-        presentarAlerta()
+    private var alerta: UIAlertController?
+    private var okAccion: UIAlertAction?
+    private var numeroDeDocumento: String?
+    private var documentoTextField: UITextField?
+    
+    override func viewDidLoad() {
+        crearAlerta()
+        configurarTextFieldEnLaAlerta()
+        configuracionAccionEnLaAlerta()
     }
     
-    func crearAlerta() {
+    private func crearAlerta() {
         alerta = UIAlertController(title: Constantes.tituloDeLaAlerta, message: Constantes.cuerpoDeLaAlerta , preferredStyle: .alert)
     }
     
-    func configurarTextFieldEnLaAlerta() {
+    private func configurarTextFieldEnLaAlerta() {
         alerta?.addTextField { campoDeTextoAConfigurar in
             campoDeTextoAConfigurar.placeholder = Constantes.textoPlaceholderDelTextField
             campoDeTextoAConfigurar.tag = Constantes.ideintificadorTextFieldTag
@@ -53,7 +49,16 @@ class BienvenidaViewController: UIViewController {
         }
     }
     
-    func procesarAccionOK() {
+    private func configuracionAccionEnLaAlerta() {
+        okAccion = UIAlertAction(title: Constantes.tituloDelBotonDeLaAlerta, style: .default) { _ in
+            self.procesarAccionOK()
+        }
+        if let alertaSegura = alerta, let okAccionSegura = okAccion  {
+            alertaSegura.addAction(okAccionSegura)
+        }
+    }
+    
+    private func procesarAccionOK() {
         guard let conjuntoDeCampoDeTexto = self.alerta?.textFields else {
             return
         }
@@ -68,37 +73,17 @@ class BienvenidaViewController: UIViewController {
         self.procesarDocumentoIngresado()
     }
     
-    func borrarCampoDeTextoDeLaAlerta() {
+    private func extraerNumeroDeDocumento() {
+        self.numeroDeDocumento = documentoTextField?.text ?? ""
+    }
+    
+    private func borrarCampoDeTextoDeLaAlerta() {
         if let documentoTextFielSeguro = documentoTextField {
             documentoTextFielSeguro.text = ""
         }
     }
     
-    func extraerNumeroDeDocumento() {
-        self.numeroDeDocumento = documentoTextField?.text ?? ""
-    }
-    
-    func configuracionAccionEnLaAlerta() {
-        okAccion = UIAlertAction(title: Constantes.tituloDelBotonDeLaAlerta, style: .default) { _ in
-            self.procesarAccionOK()
-        }
-        if let alertaSegura = alerta, let okAccionSegura = okAccion  {
-            alertaSegura.addAction(okAccionSegura)
-        }
-    }
-    
-    func presentarAlerta() {
-        if let alertaSegura = alerta {
-            present(alertaSegura, animated: true)
-        }
-    }
-    
-    func mostrarMensajeDeResultado(mensaje: String) {
-        labelDeResultado.text = mensaje
-        labelDeResultado.isHidden = false
-    }
-    
-    func procesarDocumentoIngresado() {
+    private func procesarDocumentoIngresado() {
         if numeroDeDocumento?.count == Constantes.cantidadDeDigitosDocumentoEstudiante {
             presentarVistaEstudiante()
         } else if numeroDeDocumento?.count == Constantes.cantidadDeDigitosDocumentoProfesor {
@@ -110,20 +95,45 @@ class BienvenidaViewController: UIViewController {
         }
     }
     
-    func presentarNoIngresoDocumentoEnElLabel() {
-        mostrarMensajeDeResultado(mensaje: Constantes.noIngresoNingunDocumento)
-    }
-    
-    func presentarNoSeEcuentraRolEnElLabel() {
-        mostrarMensajeDeResultado(mensaje: "\(Constantes.noSeEncuentraRol) \(self.numeroDeDocumento ?? "")")
-    }
-    
-    func presentarVistaEstudiante() {
+    private func presentarVistaEstudiante() {
         performSegue(withIdentifier: Constantes.nombreSegueEstudiantes, sender: self)
     }
     
-    func presentarVistaProfesor() {
+    private func presentarVistaProfesor() {
         performSegue(withIdentifier: Constantes.nombreSegueProfesor, sender: self)
     }
+    
+    private func presentarNoIngresoDocumentoEnElLabel() {
+        mostrarMensajeDeResultado(mensaje: Constantes.noIngresoNingunDocumento)
+    }
+    
+    private func presentarNoSeEcuentraRolEnElLabel() {
+        mostrarMensajeDeResultado(mensaje: "\(Constantes.noSeEncuentraRol) \(self.numeroDeDocumento ?? "")")
+    }
+    
+    private func mostrarMensajeDeResultado(mensaje: String) {
+        labelDeResultado.text = mensaje
+        labelDeResultado.isHidden = false
+    }
+    
+    @IBAction func accionCuandoPresionoElBoton(_ sender: UIButton) {
+        presentarAlerta()
+    }
+    
+    private func presentarAlerta() {
+        if let alertaSegura = alerta {
+            present(alertaSegura, animated: true)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
